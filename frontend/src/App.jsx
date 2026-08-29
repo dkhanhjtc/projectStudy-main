@@ -13,6 +13,13 @@ import ExamPage from './pages/ExamPage';
 import PomodoroPage from './pages/PomodoroPage';
 import ProfilePage from './pages/ProfilePage';
 
+import VocabularyPage from './pages/VocabularyPage';
+import GrammarPage from './pages/GrammarPage';
+import ListeningPage from './pages/ListeningPage';
+import SpeakingPage from './pages/SpeakingPage';
+import ReadingPage from './pages/ReadingPage';
+import AdminDashboardPage from './pages/AdminDashboardPage';
+
 // Loading spinner component
 function LoadingScreen() {
   return (
@@ -71,21 +78,21 @@ function AppRoutes() {
         <Route path="/" element={<DashboardPage />} />
 
         {/* These pages REQUIRE login */}
-        <Route path="/flashcards" element={
-          <ProtectedRoute><FlashcardsPage /></ProtectedRoute>
-        } />
-        <Route path="/quiz" element={
-          <ProtectedRoute><QuizPage /></ProtectedRoute>
-        } />
-        <Route path="/exam" element={
-          <ProtectedRoute><ExamPage /></ProtectedRoute>
-        } />
-        <Route path="/pomodoro" element={
-          <ProtectedRoute><PomodoroPage /></ProtectedRoute>
-        } />
-        <Route path="/profile" element={
-          <ProtectedRoute><ProfilePage /></ProtectedRoute>
-        } />
+        <Route path="/vocabulary" element={<ProtectedRoute><VocabularyPage /></ProtectedRoute>} />
+        <Route path="/grammar" element={<ProtectedRoute><GrammarPage /></ProtectedRoute>} />
+        <Route path="/listening" element={<ProtectedRoute><ListeningPage /></ProtectedRoute>} />
+        <Route path="/speaking" element={<ProtectedRoute><SpeakingPage /></ProtectedRoute>} />
+        <Route path="/reading" element={<ProtectedRoute><ReadingPage /></ProtectedRoute>} />
+        
+        {/* Keep legacy routes just in case */}
+        <Route path="/flashcards" element={<ProtectedRoute><FlashcardsPage /></ProtectedRoute>} />
+        <Route path="/quiz" element={<ProtectedRoute><QuizPage /></ProtectedRoute>} />
+        <Route path="/exam" element={<ProtectedRoute><ExamPage /></ProtectedRoute>} />
+        <Route path="/pomodoro" element={<ProtectedRoute><PomodoroPage /></ProtectedRoute>} />
+        <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+        
+        {/* Admin Route */}
+        <Route path="/admin" element={<ProtectedRoute><AdminDashboardPage /></ProtectedRoute>} />
       </Route>
 
       {/* Catch all */}

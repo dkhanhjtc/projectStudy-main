@@ -13,10 +13,10 @@ import {
 
 const mobileNav = [
   { to: '/', icon: LayoutDashboard, label: 'Home' },
-  { to: '/flashcards', icon: Layers, label: 'Cards' },
-  { to: '/quiz', icon: Brain, label: 'Quiz' },
-  { to: '/exam', icon: ClipboardList, label: 'Exam' },
-  { to: '/pomodoro', icon: Timer, label: 'Focus' },
+  { to: '/vocabulary', icon: Layers, label: 'Vocabulary' },
+  { to: '/grammar', icon: Brain, label: 'Grammar' },
+  { to: '/listening', icon: ClipboardList, label: 'Listening' },
+  { to: '/speaking', icon: Timer, label: 'Speaking' },
   { to: '/profile', icon: User, label: 'Profile' },
 ];
 

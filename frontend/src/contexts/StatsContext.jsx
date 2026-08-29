@@ -22,6 +22,7 @@ const INITIAL_DATA = {
     minutesPerDay: 120,  // 2 hours
     active: true,
   },
+  learningPath: null,
   studyLog: [],
 };
 
@@ -49,6 +50,11 @@ function reducer(state, action) {
         ...state,
         goal: { ...state.goal, ...action.payload },
       };
+    case 'SET_LEARNING_PATH':
+      return {
+        ...state,
+        learningPath: action.payload,
+      };
     case 'INCREMENT_STREAK':
       return { ...state, streakDays: state.streakDays + 1 };
     case 'LOAD_DATA':
@@ -74,6 +80,7 @@ export function StatsProvider({ children }) {
 
   const logStudyTime = (minutes) => dispatch({ type: 'LOG_STUDY', payload: minutes });
   const setGoal = (goalData) => dispatch({ type: 'SET_GOAL', payload: goalData });
+  const setLearningPath = (pathData) => dispatch({ type: 'SET_LEARNING_PATH', payload: pathData });
 
   const todayMinutes = (() => {
     const today = new Date().toLocaleDateString('en-US', { weekday: 'short' });
@@ -89,6 +96,7 @@ export function StatsProvider({ children }) {
     ...state,
     logStudyTime,
     setGoal,
+    setLearningPath,
     todayMinutes,
     goalProgress,
   };

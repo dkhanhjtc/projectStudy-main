@@ -300,6 +300,31 @@ export default function ProfilePage() {
           </div>
         </Card>
       </motion.div>
+
+      {/* Study History */}
+      <motion.div variants={itemVariants}>
+        <Card variant="clean" hover={false} className="!p-6">
+          <h3 className="font-heading font-bold text-xl mb-4">Study History</h3>
+          {useStats().studyLog && useStats().studyLog.length > 0 ? (
+            <div className="space-y-3 max-h-60 overflow-y-auto custom-scrollbar pr-2">
+              {useStats().studyLog.slice().reverse().map((log, i) => (
+                <div key={i} className="flex justify-between items-center p-3 rounded-xl border border-border bg-muted/30">
+                  <div>
+                    <p className="font-bold">{new Date(log.date).toLocaleDateString()}</p>
+                    <p className="text-xs text-muted-foreground">{new Date(log.date).toLocaleTimeString()}</p>
+                  </div>
+                  <Badge color="accent">+{log.minutes} mins</Badge>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-8 text-muted-foreground">
+              <Clock size={32} className="mx-auto mb-2 opacity-50" />
+              <p>No study history yet.</p>
+            </div>
+          )}
+        </Card>
+      </motion.div>
     </motion.div>
   );
 }
