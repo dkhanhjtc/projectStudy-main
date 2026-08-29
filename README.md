@@ -1,4 +1,4 @@
-# projectStudy
+# StudioNix
 
 ## 1. Yêu cầu phần mềm
 
