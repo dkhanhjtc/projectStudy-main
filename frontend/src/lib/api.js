@@ -71,3 +71,15 @@ export const profileApi = {
     return Promise.resolve(goal);
   },
 };
+
+// ---- Home API ----
+export const homeApi = {
+  getHomeData: async () => {
+    const response = await fetch(`${BASE_URL}/home`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch home data');
+    }
+    return response.json();
+  },
+};
+
