@@ -1,4 +1,5 @@
 import { NavLink, useLocation } from 'react-router-dom';
+import LogoDemo from '../../assets/LogoDemo.jpg';
 import { useAuth } from '../../contexts/AuthContext';
 import { useTheme } from '../../contexts/ThemeProvider';
 import {
@@ -43,15 +44,16 @@ export default function Sidebar() {
       {/* Logo */}
       <div className="flex items-center gap-3 px-2 py-4 mb-6 shrink-0">
         <div className="
-          w-10 h-10 rounded-full shrink-0
-          bg-accent
-          flex items-center justify-center
+          w-10 h-10 rounded-full shrink-0 flex items-center justify-center
         ">
-          <Sparkles size={20} strokeWidth={2.5} className="text-white" />
+          <img
+            src={LogoDemo}
+            alt="Studionix Logo"
+            className="w-full h-full object-contain"
+          />
         </div>
         <div className="opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-300 w-32 shrink-0">
-          <h1 className="font-heading text-lg font-extrabold leading-tight">LEA</h1>
-          <p className="text-xs text-muted-foreground font-medium truncate">Learn – Explore – Achieve</p>
+          <h1 className="font-heading text-lg font-extrabold leading-tight">Studionix</h1>
         </div>
       </div>
 

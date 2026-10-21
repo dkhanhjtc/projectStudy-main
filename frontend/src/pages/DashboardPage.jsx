@@ -30,6 +30,10 @@ import {
   ResponsiveContainer,
   CartesianGrid,
 } from 'recharts';
+import { homeApi } from '../lib/api';
+import { useState, useEffect } from 'react';
+import PathDesignModal from '../components/PathDesignModal';
+
 
 const containerVariants = {
   hidden: {},
@@ -186,17 +190,29 @@ function GuestDashboard() {
   );
 }
 
-import PathDesignModal from '../components/PathDesignModal';
-import { useState } from 'react';
 
-// ============================================
+
 // AUTHENTICATED DASHBOARD
-// ============================================
 function AuthenticatedDashboard() {
   const { user } = useAuth();
   const { decks } = useFlashcards();
   const { weeklyStudy, totalMinutes, streakDays, goalProgress, todayMinutes, goal, learningPath, setLearningPath } = useStats();
   const navigate = useNavigate();
+  const [homeData, setHomeData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    homeApi.getHomeData()
+      .then(data => {
+        setHomeData(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error('Failed to fetch home data:', err);
+        setLoading(false);
+      });
+  }, []);
+
 
   const [showPathModal, setShowPathModal] = useState(false);
 
@@ -301,34 +317,28 @@ function AuthenticatedDashboard() {
             <h3 className="font-heading font-bold text-xl">Đang học dở</h3>
           </div>
           <div className="space-y-3">
-            <Card variant="clean" shadow="sm" hover={true} className="!p-4 cursor-pointer" onClick={() => navigate('/vocabulary')}>
-              <div className="flex justify-between items-center">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-accent text-white flex items-center justify-center border-2 border-foreground">
-                    <Layers size={18} />
+            {homeData?.inProgressLessons?.length > 0 ? (
+              homeData.inProgressLessons.map((lesson, index) => (
+                <Card key={index} variant="clean" shadow="sm" hover={true} className="!p-4 cursor-pointer">
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-accent text-white flex items-center justify-center border-2 border-foreground">
+                        <Layers size={18} />
+                      </div>
+                      <div>
+                        <h4 className="font-bold">{lesson.title}</h4>
+                        <p className="text-xs text-muted-foreground">
+                          Tiến độ: {lesson.currentProgress}/{lesson.totalProgress} thẻ
+                        </p>
+                      </div>
+                    </div>
+                    <Button variant="ghost" size="sm" icon={ArrowRight}>Tiếp tục</Button>
                   </div>
-                  <div>
-                    <h4 className="font-bold">Từ vựng TOEIC - Bài 3</h4>
-                    <p className="text-xs text-muted-foreground">Tiến độ: 15/30 từ</p>
-                  </div>
-                </div>
-                <Button variant="ghost" size="sm" icon={ArrowRight}>Tiếp tục</Button>
-              </div>
-            </Card>
-            <Card variant="clean" shadow="sm" hover={true} className="!p-4 cursor-pointer" onClick={() => navigate('/grammar')}>
-              <div className="flex justify-between items-center">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-tertiary text-white flex items-center justify-center border-2 border-foreground">
-                    <Brain size={18} />
-                  </div>
-                  <div>
-                    <h4 className="font-bold">Thì hiện tại hoàn thành</h4>
-                    <p className="text-xs text-muted-foreground">Tiến độ: 5/10 câu trắc nghiệm</p>
-                  </div>
-                </div>
-                <Button variant="ghost" size="sm" icon={ArrowRight}>Tiếp tục</Button>
-              </div>
-            </Card>
+                </Card>
+              ))
+            ) : (
+              <p className="text-sm text-muted-foreground">Chưa có bài học nào đang học dở</p>
+            )}
           </div>
         </motion.div>
 
@@ -338,34 +348,26 @@ function AuthenticatedDashboard() {
             <h3 className="font-heading font-bold text-xl">Gợi ý bài học tiếp theo</h3>
           </div>
           <div className="space-y-3">
-            <Card variant="clean" shadow="sm" hover={true} className="!p-4 cursor-pointer" onClick={() => navigate('/listening')}>
-              <div className="flex justify-between items-center">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-destructive text-white flex items-center justify-center border-2 border-foreground">
-                    <ClipboardList size={18} />
+            {homeData?.suggestedLessons?.length > 0 ? (
+              homeData.suggestedLessons.map((lesson, index) => (
+                <Card key={index} variant="clean" shadow="sm" hover={true} className="!p-4 cursor-pointer">
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-secondary text-white flex items-center justify-center border-2 border-foreground">
+                        <BookOpen size={18} />
+                      </div>
+                      <div>
+                        <h4 className="font-bold">{lesson.title}</h4>
+                        <p className="text-xs text-muted-foreground">{lesson.description}</p>
+                      </div>
+                    </div>
+                    <Button variant="ghost" size="sm" icon={ArrowRight}>Bắt đầu</Button>
                   </div>
-                  <div>
-                    <h4 className="font-bold">Listening Part 1 - Practice</h4>
-                    <p className="text-xs text-muted-foreground">Phù hợp với mục tiêu của bạn</p>
-                  </div>
-                </div>
-                <Button variant="ghost" size="sm" icon={ArrowRight}>Bắt đầu</Button>
-              </div>
-            </Card>
-            <Card variant="clean" shadow="sm" hover={true} className="!p-4 cursor-pointer" onClick={() => navigate('/reading')}>
-              <div className="flex justify-between items-center">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-secondary text-white flex items-center justify-center border-2 border-foreground">
-                    <BookOpen size={18} />
-                  </div>
-                  <div>
-                    <h4 className="font-bold">Reading: Skimming & Scanning</h4>
-                    <p className="text-xs text-muted-foreground">Phù hợp với mục tiêu của bạn</p>
-                  </div>
-                </div>
-                <Button variant="ghost" size="sm" icon={ArrowRight}>Bắt đầu</Button>
-              </div>
-            </Card>
+                </Card>
+              ))
+            ) : (
+              <p className="text-sm text-muted-foreground">Chưa có gợi ý nào</p>
+            )}
           </div>
         </motion.div>
       </div>
