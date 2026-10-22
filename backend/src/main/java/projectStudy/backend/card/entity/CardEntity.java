@@ -1,16 +1,16 @@
-package projectStudy.backend.model;
+package projectStudy.backend.card.entity;
 
 import java.time.Instant;
 
-public class Card {
+public class CardEntity {
 
     private String id;
     private String front;
     private String back;
-    private Difficulty difficulty;
+    private DifficultyEntity difficulty;
     private Instant lastStudied;
 
-    public Card(String id, String front, String back, Difficulty difficulty, Instant lastStudied) {
+    public CardEntity(String id, String front, String back, DifficultyEntity difficulty, Instant lastStudied) {
         this.id = id;
         this.front = front;
         this.back = back;
@@ -18,7 +18,7 @@ public class Card {
         this.lastStudied = lastStudied;
     }
 
-    public Card() {
+    public CardEntity() {
         this.id = generateId();
     }
 
@@ -57,11 +57,11 @@ public class Card {
         this.back = back;
     }
 
-    public Difficulty getDifficulty() {
+    public DifficultyEntity getDifficulty() {
         return difficulty;
     }
 
-    public void setDifficulty(Difficulty difficulty) {
+    public void setDifficulty(DifficultyEntity difficulty) {
         this.difficulty = difficulty;
     }
 

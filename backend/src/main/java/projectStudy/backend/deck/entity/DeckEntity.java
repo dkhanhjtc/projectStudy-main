@@ -1,4 +1,4 @@
-package projectStudy.backend.model;
+package projectStudy.backend.deck.entity;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -7,8 +7,10 @@ import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import projectStudy.backend.card.entity.CardEntity;
+
 @Document
-public class Deck {
+public class DeckEntity {
 
     @Id
     private String id;
@@ -19,9 +21,9 @@ public class Deck {
     private String title;
     private String description;
 
-    private List<Card> cards = new ArrayList<>();
+    private List<CardEntity> cards = new ArrayList<>();
 
-    public Deck() {
+    public DeckEntity() {
         this.createdAt = Instant.now();
     }
 
@@ -65,11 +67,11 @@ public class Deck {
         this.createdAt = createdAt;
     }
 
-    public List<Card> getCards() {
+    public List<CardEntity> getCards() {
         return cards;
     }
 
-    public void setCards(List<Card> cards) {
+    public void setCards(List<CardEntity> cards) {
         this.cards = cards;
     }
 
@@ -90,3 +92,4 @@ public class Deck {
     }
 
 }
+

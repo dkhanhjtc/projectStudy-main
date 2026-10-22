@@ -1,11 +1,16 @@
-package projectStudy.backend.controller;
+package projectStudy.backend.deck.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import projectStudy.backend.service.DeckService;
-import projectStudy.backend.model.*;
-import projectStudy.backend.dto.*;
+import projectStudy.backend.card.dto.CreateCardRequest;
+import projectStudy.backend.card.dto.RateCardRequest;
+import projectStudy.backend.card.dto.UpdateCardRequest;
+import projectStudy.backend.card.entity.CardEntity;
+import projectStudy.backend.deck.dto.CreateDeckRequest;
+import projectStudy.backend.deck.dto.UpdateDeckRequest;
+import projectStudy.backend.deck.entity.DeckEntity;
+import projectStudy.backend.deck.service.DeckService;
 
 import java.util.List;
 
@@ -23,18 +28,18 @@ public class DeckController {
     }
 
     @GetMapping
-    public List<Deck> getAllDecks() {
+    public List<DeckEntity> getAllDecks() {
         return deckService.getDecks(TEMP_USER_ID);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Deck createDeck(@RequestBody CreateDeckRequest request) {
+    public DeckEntity createDeck(@RequestBody CreateDeckRequest request) {
         return deckService.createDeck(TEMP_USER_ID, request);
     }
 
     @PutMapping("/{deckId}")
-    public Deck updateDeck(
+    public DeckEntity updateDeck(
             @PathVariable String deckId,
             @RequestBody UpdateDeckRequest request) {
         return deckService.updateDeck(deckId, TEMP_USER_ID, request);
@@ -48,14 +53,14 @@ public class DeckController {
 
     @PostMapping("/{deckId}/cards")
     @ResponseStatus(HttpStatus.CREATED)
-    public Card addCard(
+    public CardEntity addCard(
             @PathVariable String deckId,
             @RequestBody CreateCardRequest request) {
         return deckService.addCard(deckId, TEMP_USER_ID, request);
     }
 
     @PutMapping("/{deckId}/cards/{cardId}")
-    public Card updateCard(
+    public CardEntity updateCard(
             @PathVariable String deckId,
             @PathVariable String cardId,
             @RequestBody UpdateCardRequest request) {
@@ -76,7 +81,7 @@ public class DeckController {
     }
 
     @PutMapping("/{deckId}/cards/{cardId}/rate")
-    public Card rateCard(
+    public CardEntity rateCard(
             @PathVariable String deckId,
             @PathVariable String cardId,
             @RequestBody RateCardRequest request) {

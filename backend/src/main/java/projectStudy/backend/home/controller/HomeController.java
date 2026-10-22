@@ -1,13 +1,13 @@
-package projectStudy.backend.controller;
+package projectStudy.backend.home.controller;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import projectStudy.backend.service.DeckService;
-import projectStudy.backend.model.Deck;
-import projectStudy.backend.model.Card;
+import projectStudy.backend.card.entity.CardEntity;
+import projectStudy.backend.deck.entity.DeckEntity;
+import projectStudy.backend.deck.service.DeckService;
 
 import java.time.DayOfWeek;
 import java.time.Instant;
@@ -47,7 +47,7 @@ public class HomeController {
     public Map<String, Object> getHomeData() {
 
         // Lay tat ca deck cua user
-        List<Deck> decks = deckService.getDecks(TEMP_USER_ID);
+        List<DeckEntity> decks = deckService.getDecks(TEMP_USER_ID);
 
         Map<String, Object> response = new HashMap<>();
 
@@ -79,7 +79,7 @@ public class HomeController {
      * @param decks danh sach deck cua user
      * @return Map chua tong thoi gian va thong ke theo tung ngay
      */
-    private Map<String, Object> buildWeeklyStats(List<Deck> decks) {
+    private Map<String, Object> buildWeeklyStats(List<DeckEntity> decks) {
 
         Map<String, Object> result = new HashMap<>();
 
@@ -117,14 +117,14 @@ public class HomeController {
         int totalTime = 0;
 
         // Duyet qua tat ca deck
-        for (Deck deck : decks) {
+        for (DeckEntity deck : decks) {
 
             if (deck.getCards() == null) {
                 continue;
             }
 
             // Duyet qua tat ca card trong deck
-            for (Card card : deck.getCards()) {
+            for (CardEntity card : deck.getCards()) {
 
                 // Bo qua card chua duoc hoc
                 if (card.getLastStudied() == null) {
@@ -170,12 +170,12 @@ public class HomeController {
      * @return danh sach deck da hoc mot phan nhung chua hoan thanh
      */
     private List<Map<String, Object>> buildInProgressLessons(
-            List<Deck> decks) {
+            List<DeckEntity> decks) {
 
         List<Map<String, Object>> result =
                 new ArrayList<>();
 
-        for (Deck deck : decks) {
+        for (DeckEntity deck : decks) {
 
             if (deck.getCards() == null
                     || deck.getCards().isEmpty()) {
@@ -188,7 +188,7 @@ public class HomeController {
             int currentProgress = 0;
 
             // Dem so card da duoc hoc
-            for (Card card : deck.getCards()) {
+            for (CardEntity card : deck.getCards()) {
 
                 if (card.getLastStudied() != null) {
                     currentProgress++;
@@ -231,12 +231,12 @@ public class HomeController {
      * @return danh sach deck chua co card nao duoc hoc
      */
     private List<Map<String, Object>> buildSuggestedLessons(
-            List<Deck> decks) {
+            List<DeckEntity> decks) {
 
         List<Map<String, Object>> result =
                 new ArrayList<>();
 
-        for (Deck deck : decks) {
+        for (DeckEntity deck : decks) {
 
             if (deck.getCards() == null
                     || deck.getCards().isEmpty()) {
@@ -246,7 +246,7 @@ public class HomeController {
             boolean hasStudied = false;
 
             // Kiem tra deck co card nao da duoc hoc hay chua
-            for (Card card : deck.getCards()) {
+            for (CardEntity card : deck.getCards()) {
 
                 if (card.getLastStudied() != null) {
                     hasStudied = true;
