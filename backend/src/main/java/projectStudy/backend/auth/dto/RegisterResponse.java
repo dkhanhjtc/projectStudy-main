@@ -15,7 +15,7 @@ public class RegisterResponse {
     private String gender;
     private String dateOfBirth;
 
-    public static RegisterResponse of(UserEntity userEntity) {
+    public static RegisterResponse from(UserEntity userEntity) {
         RegisterResponse response = new RegisterResponse();
         response.setId(userEntity.getId());
         response.setEmail(userEntity.getEmail());

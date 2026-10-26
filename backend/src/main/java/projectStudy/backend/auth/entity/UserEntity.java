@@ -37,6 +37,8 @@ public class UserEntity {
 
     private String role;
 
+    private String status;
+
     private boolean emailVerified;
 
     private String passwordHash;
